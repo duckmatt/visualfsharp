@@ -4658,10 +4658,10 @@ path:
        let (LongIdentWithDots(lid,dotms)) = $1 in LongIdentWithDots(lid, dotms @ [rhs parseState 2])  } 
 
 
-/* An operator name, with surrounnding parentheses */
+/* An operator name, with surrounding parentheses */
 opName: 
   | LPAREN operatorName rparen  
-     {  ident(CompileOpName $2,rhs parseState 2) }
+     {  ident(CompileOpName $2,lhs parseState) } /* Use `lhs parseState` to include surrounding parentheses in range. */
 
   | LPAREN error rparen  
      {  reportParseErrorAt (lhs parseState) (FSComp.SR.parsErrorParsingAsOperatorName()); ident(CompileOpName "****",rhs parseState 2) }
